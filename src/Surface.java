@@ -2,7 +2,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,7 +50,7 @@ public class Surface extends Path {
         camera = new Camera();
     }
 
-    public void DrawSurface(List<Path> list){
+    public void getAllPoints(List<List<Pair>> list){
 
         /*double t_0 = 0.;
         double t_n = 3 * Math.PI / 2.;
@@ -108,7 +110,8 @@ public class Surface extends Path {
 
         for (int s = 0; s < matrix.surList.size(); s++) {
 
-            Path path = new Path();
+//            Path path = new Path();
+            List<Pair> pairList = new ArrayList<>();
 
             P = Camera.Multiply(camera.S_w_v, matrix.surList.get(s));
 
@@ -130,7 +133,9 @@ public class Surface extends Path {
                 for (int i = 1; i < P[0].length; i++) {
                     currX = toScreenX(P[0][i] / P[2][i]);
                     currY = toScreenY(P[1][i] / P[2][i]);
-                    Line(path, prevX, prevY, currX, currY);
+                    pairList.add(new Pair<Integer, Integer>(prevX, prevY));
+                    pairList.add(new Pair<Integer, Integer>(currX, currY));
+//                    Line(path, prevX, prevY, currX, currY);
                     prevX = currX;
                     prevY = currY;
                 }
@@ -138,14 +143,46 @@ public class Surface extends Path {
                 System.out.print("z_v < D - не выполняется!");
             }
 
-            list.add(path);
+
+
+            list.add(pairList);
         }
+    }
+
+    public void DrawSurface(List<Path> pathList){
+        List<List<Pair>> pairList = new ArrayList<>();
+        getAllPoints(pairList);
+        for(int i = 0; i < pairList.size() - 1; i++){
+            boolean f = (i + 1 < pairList.size() - 1) ? false : true;
+            Path path = getPath(pairList.get(i), pairList.get(i + 1), f);
+            pathList.add(path);
+        }
+    }
+
+    private Path getPath(List<Pair> currList, List<Pair> nextList, boolean f){
+        Path path = new Path();
+        for(int i = 0; i < currList.size() - 1; i++){
+            int x1 = (int) currList.get(i).getKey(), y1 = (int) currList.get(i).getValue(); // Нулевая точка
+            int x2 = (int) currList.get(i + 1).getKey(), y2 = (int) currList.get(i + 1).getValue(); // Точка правее нулевой
+            int x3 = (int) nextList.get(i).getKey(), y3 = (int) nextList.get(i).getValue(); // Точка лежащая под нулевой
+            int x4 = (int) nextList.get(i + 1).getKey(), y4 = (int) nextList.get(i + 1).getValue(); // Точка лежащая под нулевой правее
+            Line(path, x1, y1, x3, y3);
+            Line(path, x1, y1, x2, y2);
+            if(!(i + 1 < currList.size() - 1)){
+                Line(path, x2, y2, x4, y4);
+            }
+            if (f){
+                Line(path, x3, y3, x4, y4);
+            }
+        }
+        return path;
     }
 
     public void Line(Path path, int x0, int y0, int x1, int y1){
         path.getElements().add(new MoveTo(x0, y0));
         path.getElements().add(new LineTo(x1, y1));
     }
+
 
     public void Clear(Path path){
         path.getElements().clear();

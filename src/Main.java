@@ -1,7 +1,5 @@
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
@@ -23,15 +21,15 @@ public class Main extends Application {
 
         Pane pane = new Pane();
         pane.setPrefSize(600, 400);
-        List<Path> list = new ArrayList<>();
-        int R = 10;
+        List<Path> pathList = new ArrayList<>();
+        int R = 3;
         Surface surface = new Surface(pane, -R, R, -R, R);
         surface.setResolution(pane.getPrefWidth(), pane.getPrefHeight());
 
 
 
-        surface.DrawSurface(list);
-        pane.getChildren().addAll(list);
+        surface.DrawSurface(pathList);
+        pane.getChildren().addAll(pathList);
 
         root.add(pane, 0, 0);
 
@@ -48,7 +46,7 @@ public class Main extends Application {
                 if(event.getText().equals("m")){
                     surface.Zoom(-1);
                 }
-                surface.DrawSurface(path);
+                surface.getAllPoints(path);
             }
         });*/
         primaryStage.setScene(scene);

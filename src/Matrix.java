@@ -20,6 +20,7 @@ public class Matrix {
     private void setMatrixVertices(){
         double t_0 = 0.;
         double t_n = 3 * Math.PI / 2.;
+//        double t_n = 2 * Math.PI;
         double step = Math.PI / 18.;
         this.M = (int) ((t_n - t_0) / step);
 //        matrix_vertices = new Double[N][M + 1];
