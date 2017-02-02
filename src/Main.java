@@ -7,6 +7,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Mike on 13.11.2016.
  */
@@ -20,21 +23,22 @@ public class Main extends Application {
 
         Pane pane = new Pane();
         pane.setPrefSize(600, 400);
-        Path path = new Path();
-        Surface surface = new Surface(pane, -2, 2, -2, 2);
+        List<Path> list = new ArrayList<>();
+        int R = 10;
+        Surface surface = new Surface(pane, -R, R, -R, R);
         surface.setResolution(pane.getPrefWidth(), pane.getPrefHeight());
 
 
 
-        surface.DrawSurface(path);
-        pane.getChildren().addAll(path);
+        surface.DrawSurface(list);
+        pane.getChildren().addAll(list);
 
         root.add(pane, 0, 0);
 
 
         Scene scene = new Scene(root);
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        /*scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 surface.Clear(path);
@@ -46,7 +50,7 @@ public class Main extends Application {
                 }
                 surface.DrawSurface(path);
             }
-        });
+        });*/
         primaryStage.setScene(scene);
         primaryStage.show();
     }

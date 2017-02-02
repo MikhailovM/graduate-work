@@ -7,7 +7,7 @@ public class Camera {
     public Double[][] S_w_v;           // Матрица перехода от мировых к видовым
     public Double[][] S_v_p;           // Матрица перехода от видовых к проекционным
     public Double[][] S_w_p;           // Матрица перехода от мировых к проекционным
-    public double D = 3.;
+    public double D = 2.;
 
     public Camera() {
 
