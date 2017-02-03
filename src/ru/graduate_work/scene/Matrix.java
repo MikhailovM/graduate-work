@@ -1,3 +1,7 @@
+package ru.graduate_work.scene;
+
+import ru.graduate_work.shape.Point;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,36 +13,10 @@ public class Matrix {
     public Double[][] matrix_vertices;  // Координаты точек, мировые координаты
     public Integer[][] matrix_edges;     // Карта граней
     public Integer[][] matrix_verges;   // Карта вершин
-    public List<Double[][]> surList = new ArrayList<>();
+
     private int N = 4;
     private int M;
 
-    public  Matrix() {
-        setMatrixVertices();
-    }
-
-    private void setMatrixVertices(){
-        double t_0 = 0.;
-        double t_n = 3 * Math.PI / 2.;
-//        double t_n = 2 * Math.PI;
-        double step = Math.PI / 18.;
-        this.M = (int) ((t_n - t_0) / step);
-//        matrix_vertices = new Double[N][M + 1];
-
-
-        for (double y = - 1; y <= 1; y += 0.1) {
-            int i = 0;
-            Double[][] matrix = new Double[N][M + 1];
-            for (double t = t_0; t <= t_n; t += step) {
-                matrix[0][i] = Math.sin(t);
-                matrix[1][i] = y;
-                matrix[2][i] = Math.cos(t);
-                matrix[3][i] = 1.;
-                i++;
-            }
-            surList.add(matrix);
-        }
-    }
 
     public void Transfer(double x, double y, double z){
         Double[][] T = {
@@ -169,5 +147,20 @@ public class Matrix {
                     res[i][j] += matrix1[i][k] * matrix_vertices[k][j];
             }
         matrix_vertices = res;
+    }
+
+    public static Double[][] convertListToArray(List<Point> points){
+        int N = 4;
+        int M = points.size();
+        Double[][] matrix = new Double[N][M];
+
+        for(int j = 0; j < M; j++){
+            Point point = points.get(j);
+            matrix[0][j] = point.getU1();
+            matrix[1][j] = point.getU2();
+            matrix[2][j] = point.getU3();
+            matrix[3][j] = point.getU4();
+        }
+        return matrix;
     }
 }

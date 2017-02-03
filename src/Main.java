@@ -4,6 +4,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
+import ru.graduate_work.scene.MainScene;
+import ru.graduate_work.shape.Reamer;
+import ru.graduate_work.shape.Surface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,22 +19,32 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.setTitle("Kinematic Surface");
+        primaryStage.setTitle("Kinematic ru.graduate_work.shape.Surface");
         GridPane root = new GridPane();
 
-        Pane pane = new Pane();
-        pane.setPrefSize(600, 400);
+        // Построение поверхности
+        Pane paneSurface = new Pane();
+        paneSurface.setPrefSize(600, 400);
         List<Path> pathList = new ArrayList<>();
         int R = 3;
-        Surface surface = new Surface(pane, -R, R, -R, R);
-        surface.setResolution(pane.getPrefWidth(), pane.getPrefHeight());
+        MainScene mainScene = new MainScene(-R, R, -R, R, 600, 400);
+        mainScene.setResolution(600, 400);
+        Surface surface = new Surface(mainScene);
+        mainScene.DrawShape(pathList, surface.pairLists);
 
+        paneSurface.getChildren().addAll(pathList);
 
+        // Построение развертки
+        Pane paneReamer = new Pane();
+        paneReamer.setPrefSize(600, 400);
+        pathList.clear();
+        Reamer reamer = new Reamer(mainScene, surface);
+        mainScene.DrawShape(pathList, reamer.pairLists);
 
-        surface.DrawSurface(pathList);
-        pane.getChildren().addAll(pathList);
+        paneReamer.getChildren().addAll(pathList);
 
-        root.add(pane, 0, 0);
+        root.add(paneSurface, 0, 0);
+        root.add(paneReamer, 1, 0);
 
 
         Scene scene = new Scene(root);

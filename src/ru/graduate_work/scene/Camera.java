@@ -1,3 +1,5 @@
+package ru.graduate_work.scene;
+
 /**
  * Created by Mike on 13.11.2016.
  */
@@ -11,7 +13,7 @@ public class Camera {
 
     public Camera() {
 
-        Double[] O_v = {0., 0., 0.};    // Координаты центра экрана
+        Double[] O_v = {0.3, 0., 0.};    // Координаты центра экрана
         Double[] T = {0., 1., 0.};      // Вверх камеры
         Double[] N = {0., 0., -1.};     // Направление камеры
 
