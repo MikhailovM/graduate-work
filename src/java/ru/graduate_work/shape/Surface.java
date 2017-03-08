@@ -21,7 +21,7 @@ public class Surface extends Path {
     public List<List<Pair>> pairLists = new ArrayList<>();
     private MainScene mainScene;
     private final double t_0 = 0.;
-    private final double t_n = 3 * Math.PI / 2.;
+    private final double t_n = 2 * Math.PI;
     private final double step = Math.PI / 18.;
     private Double[][] P;
 
@@ -33,10 +33,24 @@ public class Surface extends Path {
 
     private void init(){
 
-        for (double y = - 1; y <= 1; y += 0.1) {
+        // Поверхность круглого прямого цилиндра
+        /*for (double y = - 1; y <= 1; y += 0.1) {
             List<Point> points = new ArrayList<>();
             for (double t = t_0; t <= t_n; t += step) {
-                points.add(new Point(Math.sin(t), y * Math.cos(t), Math.cos(t)));
+                points.add(new Point(Math.sin(t), y, Math.cos(t)));
+            }
+            pointLists.add(points);
+        }*/
+
+
+        // Поверхность круглого прямого конуса
+        for(double t = t_0; t <= t_n; t += step){
+            List<Point> points = new ArrayList<>();
+            points.add(new Point(0, 0, 0.1));
+            for(double y = 0.5, a = 0.1; y <= 2; y += 0.5, a += 0.1 ){
+
+                if (y > 1) points.add(new Point(a * Math.sin(t), y, a * Math.cos(t)));
+                else points.add(new Point(- a * Math.sin(t), y, - a * Math.cos(t)));
             }
             pointLists.add(points);
         }

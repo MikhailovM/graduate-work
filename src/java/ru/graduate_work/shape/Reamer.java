@@ -30,7 +30,7 @@ public class Reamer extends Path {
 
 
 
-        for(int i = 0; i < pointLists.size(); i++){
+        /*for(int i = 0; i < pointLists.size(); i++){
             List<Pair> pairList = new ArrayList<>();
             phi_0 = calcPhi(pointLists.get(i).get(0));
             for (int j = 0; j < pointLists.get(i).size(); j++){
@@ -39,6 +39,23 @@ public class Reamer extends Path {
                 double r = calcRadius(p);
                 double x = (phi - phi_0) * r; // Координата x развертки точки p
                 double y = p.getU2(); // Координата y развертки точки p
+                int scrX = mainScene.toScreenX(x), scrY = mainScene.toScreenY(y);
+                pairList.add(new Pair<Integer, Integer>(scrX, scrY));
+            }
+            list.add(pairList);
+        }*/
+
+        for(int i = 0; i < pointLists.size(); i++){
+            List<Pair> pairList = new ArrayList<>();
+            phi_0 = calcPhi(pointLists.get(i).get(0));
+            for (int j = 0; j < pointLists.get(i).size(); j++){
+                Point p = pointLists.get(i).get(j);
+                double phi = calcPhi(p);
+                double r = calcRadius(p);
+                double psy = calcPsy(p);
+                double gamma = - (phi - phi_0) * Math.sin(psy);
+                double x = calcModul(p) * Math.cos(gamma); // Координата x развертки точки p
+                double y = calcModul(p) * Math.sin(gamma); // Координата y развертки точки p
                 int scrX = mainScene.toScreenX(x), scrY = mainScene.toScreenY(y);
                 pairList.add(new Pair<Integer, Integer>(scrX, scrY));
             }
@@ -59,6 +76,14 @@ public class Reamer extends Path {
             res = 2 * Math.PI - Math.acos(p.getU3() / calcRadius(p));
         }
         return res;
+    }
+
+    private double calcModul(Point p){
+        return Math.sqrt(Math.pow(p.getU1(), 2) + Math.pow(p.getU2(), 2) + Math.pow(p.getU3(), 2));
+    }
+
+    private double calcPsy(Point p) {
+        return (calcModul(p) != 0) ? Math.acos(p.getU2() / calcModul(p)) : 0;
     }
 
 

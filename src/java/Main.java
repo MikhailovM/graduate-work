@@ -19,7 +19,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.setTitle("Kinematic ru.graduate_work.shape.Surface");
+        primaryStage.setTitle("Kinematic Surfaces");
         GridPane root = new GridPane();
 
         // Построение поверхности
