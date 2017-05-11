@@ -1,13 +1,18 @@
 package ru.graduate_work.scene;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.*;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Pair;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by mikhyumikhaylov on 03.02.2017.
@@ -24,10 +29,10 @@ public class MainScene extends Path{
     public int toScreenY(double Y) {
         return (int) (((T - Y) * H) / (T - B));
     }
-    private double toWorldX(int X) {
+    public double toWorldX(int X) {
         return L + (R - L) * ((double) X + 0.5) / W;
     }
-    private double toWorldY(int Y) {
+    public double toWorldY(int Y) {
         return T - (T - B) * ((double) Y + 0.5) / H;
     }
 
@@ -70,7 +75,7 @@ public class MainScene extends Path{
         return path;
     }
 
-    private void Line(Path path, int x0, int y0, int x1, int y1){
+    public void Line(Path path, int x0, int y0, int x1, int y1){
         path.getElements().add(new MoveTo(x0, y0));
         path.getElements().add(new LineTo(x1, y1));
     }

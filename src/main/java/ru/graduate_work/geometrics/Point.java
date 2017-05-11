@@ -1,4 +1,4 @@
-package ru.graduate_work.shape;
+package ru.graduate_work.geometrics;
 
 /**
  * Created by mikhyumikhaylov on 03.02.2017.

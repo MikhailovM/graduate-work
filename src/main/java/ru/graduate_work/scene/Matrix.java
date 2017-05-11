@@ -1,8 +1,7 @@
 package ru.graduate_work.scene;
 
-import ru.graduate_work.shape.Point;
+import ru.graduate_work.geometrics.Point;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
