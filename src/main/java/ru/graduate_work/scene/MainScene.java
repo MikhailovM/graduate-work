@@ -2,6 +2,7 @@ package ru.graduate_work.scene;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.LineTo;
@@ -56,6 +57,42 @@ public class MainScene extends Path{
         }
     }
 
+    public Path drawMateric(List<List<Pair>> pairLists){
+        Path path = new Path();
+        path.setStroke(Color.RED);
+        path.setStrokeWidth(3);
+        Pair[][] points = listToArray(pairLists);
+        int left = 20;
+        int right = 30;
+        int height = 3;
+
+        for(int i = left; i < right; i++){
+            Line(path,
+                    (int) points[i][left].getKey(), (int) points[i][left].getValue(),
+                    (int) points[i + 1][left].getKey(), (int) points[i + 1][left].getValue());
+        }
+
+        for (int i = left + height; i > left; i--){
+            Line(path,
+                    (int) points[right][i].getKey(), (int) points[right][i].getValue(),
+                    (int) points[right][i - 1].getKey(), (int) points[right][i - 1].getValue());
+        }
+
+        for(int i = left; i < right; i++){
+            Line(path,
+                    (int) points[i][left + height].getKey(), (int) points[i][left + height].getValue(),
+                    (int) points[i + 1][left + height].getKey(), (int) points[i + 1][left + height].getValue());
+        }
+
+        for (int i = left + height; i > left; i--){
+            Line(path,
+                    (int) points[left][i].getKey(), (int) points[left][i].getValue(),
+                    (int) points[left][i - 1].getKey(), (int) points[left][i - 1].getValue());
+        }
+
+        return path;
+    }
+
     private Path getPath(List<Pair> currList, List<Pair> nextList, boolean f){
         Path path = new Path();
         for(int i = 0; i < currList.size() - 1; i++){
@@ -100,5 +137,15 @@ public class MainScene extends Path{
         }else {
             camera.S_w_p[2][2] -= 0.5;
         }
+    }
+
+    private Pair[][] listToArray(List<List<Pair>> pairLists){
+        Pair[][] arr = new Pair[pairLists.size()][pairLists.get(0).size()];
+        for(int i = 0; i < pairLists.size(); i++){
+            for(int j = 0; j < pairLists.get(0).size(); j++){
+                arr[i][j] = pairLists.get(i).get(j);
+            }
+        }
+        return arr;
     }
 }

@@ -17,9 +17,14 @@ import java.util.List;
 public class Surface extends Path {
 
     public List<Path> pathList = new ArrayList<>();
+    public Path pathMateric = new Path();
 
     public Surface(MainScene scene, MainShape shape) {
         scene.DrawShape(pathList, shape.pairLists);
+        if(shape.getClass().equals(Sphere.class)){
+            pathMateric = scene.drawMateric(shape.pairLists);
+            pathList.add(pathMateric);
+        }
     }
 
 }
